@@ -1,10 +1,8 @@
 package com.example.demo.clients;
 
-import com.example.demo.products.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 
@@ -27,7 +25,17 @@ public class ClientService {
         return client;
     }
 
-    public Client getClientById(Long id) {
-        return clientRepository.findById(id).get();
+    public Client updateClient(Client c, Long id){
+        Client client = clientRepository.findById(id).get();
+        client.setName(c.getName());
+        client.setLast_name(c.getLast_name());
+        client.setMobile(c.getMobile());
+        clientRepository.save(client);
+        return client;
     }
+
+    public boolean checkIfExists(Long id){
+        return clientRepository.findById(id).isPresent();
+    }
+
 }

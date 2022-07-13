@@ -1,7 +1,10 @@
 package com.example.demo.clients;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -17,18 +20,22 @@ public class ClientController {
     }
 
     @GetMapping
-    public List<Client> getProducts() {
+    public List<Client> getClients() {
         return clientService.getClients();
     }
 
     @PostMapping
     public Client addClient(@Valid @RequestBody Client c) {
         Client client = clientService.addClient(c);
+        System.out.println(client);
         return client;
     }
 
-    @GetMapping("/{id}")
-    public Client getClientById(@PathVariable("id") Long id) {
-        return clientService.getClientById(id);
+    @PutMapping("/{id}")
+    public Client editClient(@Valid @RequestBody Client c, @PathVariable("id") Long id){
+        if(!clientService.checkIfExists(id))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Client client = clientService.updateClient(c, id);
+        return client;
     }
 }
