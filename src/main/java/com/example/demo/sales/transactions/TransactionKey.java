@@ -1,4 +1,4 @@
-package com.example.demo.sales;
+package com.example.demo.sales.transactions;
 
 
 import javax.persistence.Column;
@@ -22,6 +22,21 @@ public class TransactionKey implements Serializable {
         this.saleId = saleId;
     }
 
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getSaleId() {
+        return saleId;
+    }
+
+    public void setSaleId(Long saleId) {
+        this.saleId = saleId;
+    }
 
     @Override
     public boolean equals(Object obj) {

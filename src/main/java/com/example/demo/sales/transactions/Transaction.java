@@ -1,6 +1,7 @@
-package com.example.demo.sales;
+package com.example.demo.sales.transactions;
 
 import com.example.demo.products.Product;
+import com.example.demo.sales.Sale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.example.demo.sales.transactions.Transaction;
 import com.example.demo.sellers.Seller;
 import com.example.demo.clients.Client;
 
@@ -20,17 +21,18 @@ public class Sale {
 
     private double total;
 
-
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @NotNull
+    @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
     private Client client;
 
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @NotNull
+    @ManyToOne
     @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false)
     private Seller seller;
 
-    @Column(insertable = false)
+    @Column(insertable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime creation_date;
 
     @NotNull
@@ -40,9 +42,8 @@ public class Sale {
     public Sale() {
     }
 
-    public Sale(double total, Client client, Seller seller) {
+    public Sale(Client client, Seller seller) {
         this.setId(id);
-        this.setTotal(total);
         this.setClient(client);
         this.setSeller(seller);
         this.setCreation_date();
@@ -60,16 +61,20 @@ public class Sale {
         return sale_transactions;
     }
 
-    public void setSale_transactions(List<Transaction> sale_transactions) {
-        this.sale_transactions = sale_transactions;
-    }
+//    public void setSale_transactions(List<Transaction> sale_transactions) {
+//        this.sale_transactions = sale_transactions;
+//    }
 
     public double getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setTotal() {
+        double tot = 0;
+        for (Transaction transaction: sale_transactions) {
+            tot += transaction.getQuantity() * transaction.getUnit_price();
+        }
+        total = tot;
     }
 
     public Client getClient() {
@@ -95,4 +100,6 @@ public class Sale {
     public void setCreation_date() {
         this.creation_date = LocalDateTime.now();
     }
+
+
 }

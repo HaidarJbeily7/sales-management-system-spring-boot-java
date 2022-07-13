@@ -18,5 +18,5 @@ public class SellerService {
         return sellerRepository.findById(id).isPresent();
     }
 
-    public Category getCategoryById(Long id){return sellerRepository.findById(id).get();}
+    public Category getSellerById(Long id){return sellerRepository.findById(id).get();}
 }

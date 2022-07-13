@@ -19,4 +19,13 @@ public class SaleService {
     public List<Sale> getAllSales() {
         return this.saleRepository.findAll();
     }
+    public Sale getSaleById(Long id) {
+        return this.saleRepository.findById(id).get();
+    }
+
+    public Sale addNewSale(Sale s){
+        s.setTotal();
+        saleRepository.save(s);
+        return s;
+    }
 }
