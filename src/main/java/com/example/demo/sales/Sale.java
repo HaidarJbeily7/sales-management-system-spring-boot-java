@@ -2,6 +2,7 @@ package com.example.demo.sales;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,17 +22,18 @@ public class Sale {
 
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
     private Client client;
 
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "seller_id", referencedColumnName = "id")
+    @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false)
     private Seller seller;
 
     @Column(insertable = false)
     private LocalDateTime creation_date;
 
+    @NotNull
     @OneToMany(mappedBy = "sale")
     List<Transaction> sale_transactions;
 

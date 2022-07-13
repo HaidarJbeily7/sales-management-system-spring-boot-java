@@ -16,18 +16,23 @@ public class Transaction {
     @JsonIgnore
     @ManyToOne
     @MapsId("saleId")
-    @JoinColumn(name = "sale_id", referencedColumnName = "id")
+    @JoinColumn(name = "sale_id", referencedColumnName = "id", nullable = false)
     private Sale sale;
 
     @ManyToOne
     @MapsId("productId")
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     private Product product;
 
     @NotNull
     @Min(value = 1)
+    @Column(nullable = false)
     private int quantity;
 
+
+    @NotNull
+    @Min(value = 0)
+    @Column(nullable = false)
     private double unit_price;
 
     public Transaction() {
