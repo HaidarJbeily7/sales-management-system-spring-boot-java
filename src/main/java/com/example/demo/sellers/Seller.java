@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.sellers;
 
 
 import org.springframework.lang.Nullable;

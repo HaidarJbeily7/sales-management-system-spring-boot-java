@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.example.demo.Seller;
+import com.example.demo.sellers.Seller;
 import com.example.demo.clients.Client;
 
 
@@ -38,12 +38,12 @@ public class Sale {
     public Sale() {
     }
 
-    public Sale(Long id, double total, Client client, Seller seller, LocalDateTime creation_date) {
-        this.id = id;
-        this.total = total;
-        this.client = client;
-        this.seller = seller;
-        this.creation_date = creation_date;
+    public Sale(double total, Client client, Seller seller) {
+        this.setId(id);
+        this.setTotal(total);
+        this.setClient(client);
+        this.setSeller(seller);
+        this.setCreation_date();
     }
 
     public Long getId() {
@@ -90,7 +90,7 @@ public class Sale {
         return creation_date;
     }
 
-    public void setCreation_date(LocalDateTime creation_date) {
-        this.creation_date = creation_date;
+    public void setCreation_date() {
+        this.creation_date = LocalDateTime.now();
     }
 }
