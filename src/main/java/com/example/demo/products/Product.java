@@ -1,10 +1,11 @@
 package com.example.demo.products;
 
 
-import com.example.demo.Category;
+import com.example.demo.categories.Category;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -19,33 +20,28 @@ public class Product {
 
     @NotBlank
     @Size(min = 2)
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = true)
     private String description;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     private Category category;
 
-    @Column(insertable = false)
+    @Column(insertable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime creation_date;
 
     public Product() {
     }
 
-    public Product(Long id, String name, String description, Category category, LocalDateTime creation_date) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.creation_date = creation_date;
-    }
-
-    public Product(String name, String description, Category category, LocalDateTime creation_date) {
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.creation_date = creation_date;
+    public Product(String name, String description, Category category) {
+        this.setName(name);
+        this.setDescription(description);
+        this.setCategory(category);
+        this.setCreation_date();
     }
 
     public void setId(Long id) {
@@ -64,8 +60,8 @@ public class Product {
         this.category = category;
     }
 
-    public void setCreation_date(LocalDateTime creation_date) {
-        this.creation_date = creation_date;
+    public void setCreation_date() {
+        this.creation_date = LocalDateTime.now().withNano(0);
     }
 
     public Long getId() {
@@ -77,7 +73,7 @@ public class Product {
     }
 
     public String getDescription() {
-        return description;
+        return description == null ? "":description;
     }
 
     public Category getCategory() {
@@ -85,17 +81,17 @@ public class Product {
     }
 
     public LocalDateTime getCreation_date() {
-        return creation_date;
+        return creation_date == null ? LocalDateTime.now():creation_date;
     }
 
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                "id=" + this.getId() +
+                ", name='" + this.getName() + '\'' +
+                ", description='" + this.getDescription() + '\'' +
                 ", category='" + category.getTitle() + '\'' +
-                ", creation_date=" + creation_date +
+                ", creation_date=" + this.getCreation_date().toString() +
                 '}';
     }
 }

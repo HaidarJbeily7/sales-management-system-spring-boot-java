@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.categories;
 
 
 import org.springframework.lang.Nullable;
