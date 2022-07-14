@@ -34,6 +34,7 @@ public class ProductController {
     public Product addProduct(@Valid @RequestBody  Product p){
         if(!categoryService.checkIfExists(p.getCategory().getId()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category is invalid");
+        p.setId(0L);
         Product product = productService.addNewProduct(p);
         Long cat_id = product.getCategory().getId();
         Category category = categoryService.getCategoryById(cat_id);
