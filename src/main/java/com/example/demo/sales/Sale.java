@@ -61,9 +61,6 @@ public class Sale {
         return sale_transactions;
     }
 
-//    public void setSale_transactions(List<Transaction> sale_transactions) {
-//        this.sale_transactions = sale_transactions;
-//    }
 
     public double getTotal() {
         return total;

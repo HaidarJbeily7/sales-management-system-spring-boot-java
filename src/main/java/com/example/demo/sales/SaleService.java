@@ -16,6 +16,11 @@ public class SaleService {
         this.saleRepository = saleRepository;
     }
 
+
+    public boolean checkIfExists(Long id){
+        return saleRepository.findById(id).isPresent();
+    }
+
     public List<Sale> getAllSales() {
         return this.saleRepository.findAll();
     }
@@ -23,9 +28,10 @@ public class SaleService {
         return this.saleRepository.findById(id).get();
     }
 
-    public Sale addNewSale(Sale s){
+    public Sale addOrUpdateNewSale(Sale s){
         s.setTotal();
         saleRepository.save(s);
         return s;
     }
+
 }

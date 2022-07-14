@@ -8,7 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+
 @Entity
+@Table(name="transactions")
 public class Transaction {
 
     @EmbeddedId
@@ -26,13 +28,13 @@ public class Transaction {
     private Product product;
 
     @NotNull
-    @Min(value = 1)
-    @Column(nullable = false)
+    @Min(value = 1, message = "at min 1")
+    @Column(nullable = false, name = "quantity")
     private int quantity;
 
 
     @NotNull
-    @Min(value = 0)
+    @Min(value = 0, message = "at min 0")
     @Column(nullable = false)
     private double unit_price;
 
@@ -84,4 +86,25 @@ public class Transaction {
         this.unit_price = unit_price;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Transaction that = (Transaction) obj;
+
+        if (!getProduct().getId().equals(that.getProduct().getId())) return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id.getProductId().toString() +
+                ", sale=" + sale.getId().toString() +
+                ", product=" + product.getId().toString() +
+                ", quantity=" + quantity +
+                ", unit_price=" + unit_price +
+                '}';
+    }
 }

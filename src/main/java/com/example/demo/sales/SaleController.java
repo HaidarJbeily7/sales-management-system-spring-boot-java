@@ -56,8 +56,19 @@ public class SaleController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "product not found");
         }
         s.setTotal();
-        Sale sale = saleService.addNewSale(s);
+        Sale sale = saleService.addOrUpdateNewSale(s);
         transactionService.addMultipleTransactions(transactions, sale);
+        return sale;
+    }
+
+    @PatchMapping("/{id}")
+    public Sale editSaleTransactions(@Valid @RequestBody List<Transaction> transactions, @PathVariable("id") Long id){
+        if(!saleService.checkIfExists(id))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        List <Transaction> old_transaction = transactionService.getTransactionBySale(id);
+        transactionService.updateTransactions(old_transaction, transactions);
+        Sale s = saleService.getSaleById(id);
+        Sale sale = saleService.addOrUpdateNewSale(s);
         return sale;
     }
 
