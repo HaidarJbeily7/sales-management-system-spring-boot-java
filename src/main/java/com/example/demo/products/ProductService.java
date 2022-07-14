@@ -2,6 +2,8 @@ package com.example.demo.products;
 
 import com.example.demo.categories.Category;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,8 +19,9 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public List<Product> getProducts(int pageNo, int pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        return productRepository.findAll(paging).toList();
     }
 
     public Product addNewProduct(Product p){

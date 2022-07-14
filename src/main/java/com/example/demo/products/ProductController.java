@@ -23,9 +23,10 @@ public class ProductController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
-    public List<Product> getProducts() {
-        return productService.getProducts();
+    @GetMapping("/{pageNo}/{pageSize}")
+    public List<Product> getProducts(@PathVariable int pageNo,
+                                     @PathVariable int pageSize) {
+        return productService.getProducts(pageNo, pageSize);
     }
 
     @PostMapping
@@ -33,6 +34,9 @@ public class ProductController {
         if(!categoryService.checkIfExists(p.getCategory().getId()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category is invalid");
         Product product = productService.addNewProduct(p);
+        Long cat_id = product.getCategory().getId();
+        Category category = categoryService.getCategoryById(cat_id);
+        product.setCategory(category);
         return  product;
     }
 
