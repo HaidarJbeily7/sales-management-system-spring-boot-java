@@ -1,6 +1,8 @@
 package com.example.demo.clients;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +18,10 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    public List<Client> getClients() {
-        return clientRepository.findAll();
+    public List<Client> getClients(int pageNo, int pageSize)
+    {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        return clientRepository.findAll(paging).toList();
     }
 
     public Client addClient(Client c) {
