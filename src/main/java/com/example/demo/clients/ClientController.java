@@ -19,15 +19,16 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @GetMapping
-    public List<Client> getClients() {
-        return clientService.getClients();
+    @GetMapping("/{pageNo}/{pageSize}")
+    public List<Client> getClients(@PathVariable int pageNo,
+                                   @PathVariable int pageSize) {
+        return clientService.getClients(pageNo, pageSize);
     }
 
     @PostMapping
     public Client addClient(@Valid @RequestBody Client c) {
+        c.setId(0L);
         Client client = clientService.addClient(c);
-        System.out.println(client);
         return client;
     }
 
