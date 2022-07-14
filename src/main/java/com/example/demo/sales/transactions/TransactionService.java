@@ -1,6 +1,8 @@
 package com.example.demo.sales.transactions;
 
 import com.example.demo.sales.Sale;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import java.util.List;
 @Service
 public class TransactionService {
 
+    Logger logger  = LoggerFactory.getLogger(TransactionService.class);
     final private TransactionRepository transactionRepository;
 
     @Autowired
@@ -48,9 +51,9 @@ public class TransactionService {
                     double change_price = _new.getUnit_price() - _old.getUnit_price();
                     old_trans.get(index_old).setQuantity(_new.getQuantity());
                     old_trans.get(index_old).setUnit_price(_new.getUnit_price());
-                    System.out.println(change_quantity);
-                    System.out.println(change_price);
-                    System.out.println();
+                    String message = "Transaction {sale_id="+ _old.getSale().getId() +", product_id="+ _old.getProduct().getId() +"} has been updated ";
+                    message += "change in quantity = " + change_quantity+ ", change in unit_price = "+ change_price;
+                    logger.info(message);
                 }
             }
         }
