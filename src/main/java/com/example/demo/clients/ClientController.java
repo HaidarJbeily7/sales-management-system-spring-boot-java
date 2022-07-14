@@ -25,6 +25,7 @@ public class ClientController {
         return clientService.getClients(pageNo, pageSize);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Client addClient(@Valid @RequestBody Client c) {
         c.setId(0L);

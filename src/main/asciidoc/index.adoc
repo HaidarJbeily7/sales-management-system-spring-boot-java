@@ -1,11 +1,63 @@
-= Getting Started With Spring REST Docs
+= API DOCS
 
-This is an example output for a service running at http://localhost:8080:
-== Add Client API
+
+==Client Resource API
+
 .request
 include::{snippets}/testAddClient/http-request.adoc[]
 
 .response
 include::{snippets}/testAddClient/http-response.adoc[]
 
-As you can see the format is very simple, and in fact you always get the same message.
+.request
+include::{snippets}/testGetClients/http-request.adoc[]
+
+.response
+include::{snippets}/testGetClients/http-response.adoc[]
+
+.request
+include::{snippets}/testEditClient/http-request.adoc[]
+
+.response
+include::{snippets}/testEditClient/http-response.adoc[]
+
+==Product Resource API
+
+.request
+include::{snippets}/testAddProduct/http-request.adoc[]
+
+.response
+include::{snippets}/testAddProduct/http-response.adoc[]
+
+.request
+include::{snippets}/testGetProducts/http-request.adoc[]
+
+.response
+include::{snippets}/testGetProducts/http-response.adoc[]
+
+.request
+include::{snippets}/testEditProduct/http-request.adoc[]
+
+.response
+include::{snippets}/testEditProduct/http-response.adoc[]
+
+
+==Sale Resource API
+
+.request
+include::{snippets}/testAddSale/http-request.adoc[]
+
+.response
+include::{snippets}/testAddSale/http-response.adoc[]
+
+.request
+include::{snippets}/testGetSales/http-request.adoc[]
+
+.response
+include::{snippets}/testGetSales/http-response.adoc[]
+
+.request
+include::{snippets}/testEditSaleTransactions/http-request.adoc[]
+
+.response
+include::{snippets}/testEditSaleTransactions/http-response.adoc[]

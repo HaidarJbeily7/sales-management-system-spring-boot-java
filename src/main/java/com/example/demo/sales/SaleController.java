@@ -41,7 +41,8 @@ public class SaleController {
                                @PathVariable int pageSize) {
         return this.saleService.getAllSales(pageNo, pageSize);
     }
-    
+
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Sale AddSale(@Valid @RequestBody  Sale s){
         Long client_id = s.getClient().getId();

@@ -29,6 +29,7 @@ public class ProductController {
         return productService.getProducts(pageNo, pageSize);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Product addProduct(@Valid @RequestBody  Product p){
         if(!categoryService.checkIfExists(p.getCategory().getId()))
