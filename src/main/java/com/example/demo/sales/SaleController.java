@@ -36,9 +36,10 @@ public class SaleController {
         this.transactionService = transactionService;
     }
 
-    @GetMapping
-    public List<Sale> getSales() {
-        return this.saleService.getAllSales();
+    @GetMapping("/{pageNo}/{pageSize}")
+    public List<Sale> getSales(@PathVariable int pageNo,
+                               @PathVariable int pageSize) {
+        return this.saleService.getAllSales(pageNo, pageSize);
     }
     
     @PostMapping
@@ -55,9 +56,11 @@ public class SaleController {
             if(!productService.checkIfExists(product_id))
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "product not found");
         }
-        s.setTotal();
-        Sale sale = saleService.addOrUpdateNewSale(s);
-        transactionService.addMultipleTransactions(transactions, sale);
+        s.setId(0L);
+        Sale sale = saleService.addOrUpdateSale(s);
+        List<Transaction> trans = transactionService.addMultipleTransactions(transactions, sale);
+        sale.setCreation_date();
+        sale.setSale_transactions(trans);
         return sale;
     }
 
@@ -68,7 +71,7 @@ public class SaleController {
         List <Transaction> old_transaction = transactionService.getTransactionBySale(id);
         transactionService.updateTransactions(old_transaction, transactions);
         Sale s = saleService.getSaleById(id);
-        Sale sale = saleService.addOrUpdateNewSale(s);
+        Sale sale = saleService.addOrUpdateSale(s);
         return sale;
     }
 

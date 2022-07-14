@@ -2,6 +2,7 @@ package com.example.demo.sales;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,7 +36,7 @@ public class Sale {
     @Column(insertable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime creation_date;
 
-    @NotNull
+
     @OneToMany(mappedBy = "sale")
     List<Transaction> sale_transactions;
 
@@ -95,8 +96,11 @@ public class Sale {
     }
 
     public void setCreation_date() {
-        this.creation_date = LocalDateTime.now();
+        this.creation_date = LocalDateTime.now().withNano(0);
     }
 
 
+    public void setSale_transactions(List<Transaction> sale_transactions) {
+        this.sale_transactions = sale_transactions;
+    }
 }
